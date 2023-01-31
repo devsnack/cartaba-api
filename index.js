@@ -1,27 +1,135 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
-
+const { MongoClient } = require("mongodb");
 app.use(express.json());
 app.use(express.urlencoded());
 
 app.use(
   cors({
-    origin: "http://127.0.0.1:5500",
+    origin: "https://cartana2.netlify.app",
   })
 );
 const port = 3000;
 
 let data = [];
 
+// mongodb client
+var url =
+  "mongodb+srv://cartana:cartana27@cluster0.u9y6mbj.mongodb.net/?retryWrites=true&w=majority";
+var client = new MongoClient(url);
+
+const db = client.db("cartana-form").collection("data");
+
+app.get("/test", async (req, res) => {
+  let data = await db.find({});
+  res.json(data);
+});
+
+function reshapeData(data) {
+  // new columns products
+  let q1 = "01. Quel produit STYLE CHIC utilisez-vous actuellement?";
+  let q2 =
+    "02. Quelle marque de poudre décolorante (Décapage) disponible sur le marché utilisez-vous actuellement";
+  let q3 =
+    " 03. Que pouvons-nous améliorer sur la poudre décolorante STYLE CHIC";
+  let q4 =
+    "04. En moyenne, combien utilisez-vous en quantité de poudre décolorante par jour ";
+  let q5 =
+    "05. Quelle marque de crème coiffante (Brillantine) disponible sur le marché utilisez-vous actuellement ";
+  let q6 = "06. Que pouvons-nous améliorer sur la Crème coiffante STYLE CHIC ";
+  let q7 =
+    "07. Quelle marque de Sérum Capillaire disponible sur le marché utilisez-vous ";
+  let q8 = "08. Que pouvons-nous améliorer sur le Sérum capillaire STYLE CHIC ";
+  let q9 = "09. Donnez une note pour chacun des produits STYLE CHIC ci-dessous";
+  let q91 = "Poudre Décolorante SILVER X2";
+  let q92 = "Poudre Décolorante GOLD X3";
+  let q93 = "Sérum Capillaire";
+  let q94 = "Crème Coiffante (Brillantine)";
+  let q10 = "10. Quels sont les points forts des produits STYLE CHIC ";
+  let q11 = "11. Quels sont les points faibles des produits STYLE CHIC ";
+  let q12 =
+    "12. Donnez une note pour évaluer le Packaging (Emballage) de nos produits";
+  let q13 =
+    "13. Que pouvons-nous améliorer sur le packaging (Emballage) de nos produits?";
+  let q14 =
+    "14. Quelle note attribuez-vous au rapport qualité/prix de nos produits";
+  let q15 = "15. Auprès de quel point de vente achetez-vous vos produits";
+  let q16 = "16. Avez-vous testé la nouvelle crème oxydante STYLE CHIC";
+  let q17 = "17. Attribuez une note pour la crème oxydante STYLE CHIC";
+  let q18 =
+    "18. En moyenne, combien utilisez vous en quantité de crème oxydante par jour";
+  let q19 =
+    "19. Quel nouveau produit souhaitez-vous que STYLE CHIC produise pour vous";
+  let q20 =
+    "20. Recommanderiez-vous les produits STYLE CHIC à vos Clients ou à d'autres Salons de Coiffure";
+  let q21 =
+    "21. Avez-vous rencontré des problèmes lors de l'utilisation d'un de nos produits";
+  let q22 =
+    "22. Souhaitez-vous ajouter quelque chose concernant STYLE CHIC qui ne vous a pas été demandé dans ce formulaire";
+
+  let q23 = "23. Pouvons-nous donner suite à vos réponses en vous contactant";
+  let ncp = {
+    q1: "oui",
+  };
+  if (data.products == "aucun") {
+    ncp[q1] = "aucun";
+    data.product = "";
+  }
+  let newdata = {
+    "Nom et prenom": data.fullname,
+    "Salon de coiffure": data.ccenter,
+    Email: data.email,
+    Téléphone: data.email,
+    Adresse: data.adresse,
+    "adresse gps": data.position,
+    Wilaya: data.wilaya,
+    "Code Postal": data.cposte,
+    Pays: data.pays,
+    Facebook: data.facebook,
+    Instagram: data.instagram,
+    [q1]: ncp,
+    [q1]: data.products,
+    [q2]: data.reponse2,
+    [q3]: data.reponse3,
+    [q4]: data.reponse4,
+    [q5]: data.reponse5,
+    [q6]: data.reponse6,
+    [q7]: data.reponse7,
+    [q8]: data.reponse8,
+    [q9]: q9,
+    [q91]: data.pdsnote,
+    [q92]: data.pdgnote,
+    [q93]: data.stylenote,
+    [q94]: data.cremenote,
+    [q10]: data.pointfr,
+    [q11]: data.pointfb,
+    [q12]: data.reponse12,
+    [q13]: data.reponse13,
+    [q14]: data.reponse14,
+    [q15]: data.reponse15,
+    [q16]: data.reponse16,
+    [q17]: data.reponse17,
+    [q18]: data.reponse18,
+    [q19]: data.reponse19,
+    [q20]: data.reponse20,
+    [q21]: data.reponse21,
+    [q22]: data.reponse22,
+    [q23]: data.reponse23,
+  };
+  return newdata;
+}
+
 app.get("/infos", (req, res) => {
   res.json(data);
 });
 
-app.post("/data", (req, res) => {
+app.post("/data", async (req, res) => {
   let rdata = req.body;
   data.push(rdata);
-  console.log(data);
+  let newdata = reshapeData(rdata);
+  await db.insertOne(newdata);
+  console.log("data sendded");
   res.status(200).json({ msg: "sucess" });
 });
 
