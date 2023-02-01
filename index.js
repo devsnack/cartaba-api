@@ -5,7 +5,11 @@ const { MongoClient } = require("mongodb");
 app.use(express.json());
 app.use(express.urlencoded());
 
-app.use(cors());
+app.use(
+  cors({
+    origin: "https://cartana2.netlify.app/",
+  })
+);
 const port = 3000;
 
 let data = [];
