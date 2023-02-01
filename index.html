@@ -1050,16 +1050,14 @@
         data.products = "aucun produit";
       }*/
       // var data =  {name:"abdeldjalil",adresse:"cartana sog el lile",r1:"highly recommended",note1:5};
-      postData("https://adventurous-robe-seal.cyclic.app/data", data).then(
-        (data) => {
-          console.log(data);
-          if (data.msg == "sucess") {
-            swal("Good job!", "Bien envoyé!", "success");
-            location.reload();
-          }
-          // JSON data parsed by `data.json()` call
+      postData("https://cartaba-api.vercel.app/data", data).then((data) => {
+        console.log(data);
+        if (data.msg == "sucess") {
+          swal("Good job!", "Bien envoyé!", "success");
+          location.reload();
         }
-      );
+        // JSON data parsed by `data.json()` call
+      });
     });
 
     async function postData(url = "http://localhost:3000/data", data) {
