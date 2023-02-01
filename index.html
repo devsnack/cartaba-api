@@ -130,6 +130,19 @@
           />
           <div class="invalid-feedback">Attention Vide.</div>
         </div>
+        <div class="mb-3">
+          <label for="" class="form-label"
+            ><strong>Notation du Salon.</strong>
+          </label>
+          <input
+            type="text"
+            class="form-control"
+            id="snotation"
+            placeholder="Salon de coiffure"
+            onkeydown="showvalid('snotation')"
+          />
+          <div class="invalid-feedback">Attention Vide.</div>
+        </div>
 
         <div class="mb-3">
           <label for="email" class="form-label"><strong>Email</strong></label>
@@ -1010,6 +1023,7 @@
   </body>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
   <script>
     // Call as
     var checkfirstform = false;
@@ -1038,7 +1052,12 @@
       // var data =  {name:"abdeldjalil",adresse:"cartana sog el lile",r1:"highly recommended",note1:5};
       postData("https://cartanaformulaire-api.onrender.com/data", data).then(
         (data) => {
-          console.log(data); // JSON data parsed by `data.json()` call
+          console.log(data);
+          if (data.msg == "sucess") {
+            swal("Good job!", "Bien envoyé!", "success");
+            location.reload();
+          }
+          // JSON data parsed by `data.json()` call
         }
       );
     });
@@ -1324,6 +1343,7 @@
     function getf1data() {
       var fullname = document.getElementById("fullname");
       var ccenter = document.getElementById("ccenter");
+      var snotation = document.getElementById("snotatin");
       var email = document.getElementById("email");
       var tel = document.getElementById("tel");
       var adresse = document.getElementById("adresse");
@@ -1339,6 +1359,7 @@
       var data = {
         fullname: fullname.value,
         ccenter: ccenter.value,
+        snotation: snotation.value,
         email: email.value,
         tel: tel.value,
         adresse: adresse.value,
