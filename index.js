@@ -7,7 +7,7 @@ app.use(express.urlencoded());
 
 app.use(
   cors({
-    origin: "https://cartana2.netlify.app",
+    origin: "http://127.0.0.1:5500",
   })
 );
 const port = 3000;
@@ -65,9 +65,11 @@ function reshapeData(data) {
     "20. Recommanderiez-vous les produits STYLE CHIC à vos Clients ou à d'autres Salons de Coiffure";
   let q21 =
     "21. Avez-vous rencontré des problèmes lors de l'utilisation d'un de nos produits";
+  let q211 = "21.1 Quel est le Produit concerné";
+  let q212 = " 21.2 Quel était le problème rencontré ";
   let q22 =
     "22. Souhaitez-vous ajouter quelque chose concernant STYLE CHIC qui ne vous a pas été demandé dans ce formulaire";
-
+  let q221 = "22.1 Si oui, merci de préciser ce dont il s’agit:";
   let q23 = "23. Pouvons-nous donner suite à vos réponses en vous contactant";
   let ncp = {
     q1: "oui",
@@ -76,11 +78,19 @@ function reshapeData(data) {
     ncp[q1] = "aucun";
     data.product = "";
   }
+
+  var dateObj = new Date();
+  var month = dateObj.getUTCMonth() + 1; //months from 1-12
+  var day = dateObj.getUTCDate();
+  var year = dateObj.getUTCFullYear();
+
+  let newdate = year + "/" + month + "/" + day;
   let newdata = {
+    Date: newdate,
     "Nom et prenom": data.fullname,
     "Salon de coiffure": data.ccenter,
     Email: data.email,
-    Téléphone: data.email,
+    Téléphone: data.tel,
     Adresse: data.adresse,
     "adresse gps": data.position,
     Wilaya: data.wilaya,
@@ -88,34 +98,37 @@ function reshapeData(data) {
     Pays: data.pays,
     Facebook: data.facebook,
     Instagram: data.instagram,
-    [q1]: ncp,
+    q1: ncp[q1],
     [q1]: data.products,
-    [q2]: data.reponse2,
-    [q3]: data.reponse3,
-    [q4]: data.reponse4,
-    [q5]: data.reponse5,
-    [q6]: data.reponse6,
-    [q7]: data.reponse7,
-    [q8]: data.reponse8,
-    [q9]: q9,
-    [q91]: data.pdsnote,
-    [q92]: data.pdgnote,
-    [q93]: data.stylenote,
-    [q94]: data.cremenote,
-    [q10]: data.pointfr,
-    [q11]: data.pointfb,
-    [q12]: data.reponse12,
-    [q13]: data.reponse13,
-    [q14]: data.reponse14,
-    [q15]: data.reponse15,
-    [q16]: data.reponse16,
-    [q17]: data.reponse17,
-    [q18]: data.reponse18,
-    [q19]: data.reponse19,
-    [q20]: data.reponse20,
-    [q21]: data.reponse21,
-    [q22]: data.reponse22,
-    [q23]: data.reponse23,
+    [" " + q2]: data.reponse2,
+    [" " + q3]: data.reponse3,
+    [" " + q4]: data.reponse4,
+    [" " + q5]: data.reponse5,
+    [" " + q6]: data.reponse6,
+    [" " + q7]: data.reponse7,
+    [" " + q8]: data.reponse8,
+    [" " + q9]: q9,
+    [" " + q91]: data.pdsnote,
+    [" " + q92]: data.pdgnote,
+    [" " + q93]: data.stylenote,
+    [" " + q94]: data.cremenote,
+    [" " + q10]: data.pointfr,
+    [" " + q11]: data.pointfb,
+    [" " + q12]: data.reponse12,
+    [" " + q13]: data.reponse13,
+    [" " + q14]: data.reponse14,
+    [" " + q15]: data.pointachat,
+    [" " + q16]: data.reponse16,
+    [" " + q17]: data.reponse17,
+    [" " + q18]: data.reponse18,
+    [" " + q19]: data.reponse19,
+    [" " + q20]: data.reponse20,
+    [" " + q21]: data.reponse21,
+    [" " + q211]: data.reponse211,
+    [" " + q212]: data.reponse212,
+    [" " + q22]: data.reponse22,
+    [" " + q221]: data.reponse221,
+    [" " + q23]: data.reponse23,
   };
   return newdata;
 }

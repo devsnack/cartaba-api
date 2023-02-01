@@ -72,6 +72,7 @@
       .btns {
         display: flex;
       }
+
       #prevBtn,
       #nextBtn {
         margin-right: 10px;
@@ -247,13 +248,16 @@
 
       <!---->
       <div class="tab">
+        <label for="" class="form-label">
+          01. Quel produit STYLE CHIC utilisez-vous actuellement?</label
+        >
         <div class="ch-container mb-3">
           <div class="form-check box">
             <input
               class="form-check-input"
               type="checkbox"
               value=""
-              id="creme"
+              id="Crème Coiffante (Brillantine) STYLE CHIC"
               name="elem"
             />
             <img src="./creme.png" />
@@ -266,7 +270,7 @@
               class="form-check-input"
               type="checkbox"
               value=""
-              id="pdg"
+              id="Poudre Décolorante (Décapage) GOLD X3 STYLE CHIC"
               name="elem"
             />
             <img src="./pdg.png" />
@@ -279,7 +283,7 @@
               class="form-check-input"
               type="checkbox"
               value=""
-              id="pds"
+              id="Poudre Décolorante (Décapage) GOLD X3 STYLE CHIC"
               name="elem"
             />
             <img src="./pds.png" />
@@ -293,7 +297,7 @@
               class="form-check-input"
               type="checkbox"
               value="stylechic"
-              id="stylechic"
+              id="Sérum Capillaire STYLE CHIC"
               name="elem"
             />
             <img src="./stylechic.png" />
@@ -306,7 +310,7 @@
               class="form-check-input"
               type="checkbox"
               value="oxydante"
-              id="oxydante"
+              id="Crème Oxydante STYLE CHIC"
               name="elem"
             />
             <img src="./oxydante.png" />
@@ -701,7 +705,7 @@
               <input
                 class="form-check-input"
                 type="checkbox"
-                id="inlineCheckbox1"
+                id="Grossiste"
                 value="Grossiste"
                 name="pointachat"
               />
@@ -713,7 +717,7 @@
               <input
                 class="form-check-input"
                 type="checkbox"
-                id="msec"
+                id="Magasin spécialisé en cosmétique"
                 value="msec"
                 name="pointachat"
               />
@@ -725,7 +729,7 @@
               <input
                 class="form-check-input"
                 type="checkbox"
-                id="tbjr"
+                id="Tabac / Journaux"
                 value="tbjr"
                 name="pointachat"
               />
@@ -889,9 +893,21 @@
                 name="radio3"
                 id="radio3"
                 value="non"
+                onclick="hideaddition21()"
               />
               <label class="form-check-label" for="radio3">non</label>
             </div>
+            <div id="addition21" style="margin: 15px 15px; display: none">
+              <label for="211" class="form-label"
+                >21.1 Quel est le Produit concerné ?</label
+              >
+              <input type="text" class="form-control" id="211" />
+              <label for="212" class="form-label"
+                >21.2 Quel était le problème rencontré ?</label
+              >
+              <input type="text" class="form-control" id="212" />
+            </div>
+
             <div class="invalid-feedback">Attention Vide.</div>
           </div>
         </div>
@@ -920,8 +936,15 @@
                 name="radio4"
                 id="radio4"
                 value="non"
+                onclick="hideaddition22()"
               />
               <label class="form-check-label" for="radio3">non</label>
+            </div>
+            <div id="addition22" style="margin: 15px 15px; display: none">
+              <label for="211" class="form-label"
+                >22.1 Si oui, merci de préciser ce dont il s’agit:?</label
+              >
+              <input type="text" class="form-control" id="221" />
             </div>
             <div class="invalid-feedback">Attention Vide.</div>
           </div>
@@ -1067,6 +1090,9 @@
       delete ldata.pointfr;
       delete ldata.pointfb;
       delete ldata.pointachat;
+      delete ldata.reponse211;
+      delete ldata.reponse212;
+      delete ldata.reponse221;
 
       let { reponse16, reponse20, reponse21, reponse22, reponse23 } = ldata;
       delete ldata.reponse16;
@@ -1173,13 +1199,26 @@
 
   <script>
     var radio3 = document.querySelector('input[name="radio3"]');
+    var radio4 = document.querySelector('input[name="radio4"]');
     radio3.addEventListener("change", function () {
       if (radio3.value == "oui") {
-        alert("waaah waaah ");
+        document.getElementById("addition21").style.display = "";
       }
-      console.log("wsh hada ");
     });
-    console.log("radio3", radio3);
+    radio4.addEventListener("change", function () {
+      if (radio4.value == "oui") {
+        document.getElementById("addition22").style.display = "";
+      }
+    });
+    function hideaddition21() {
+      document.getElementById("addition21").style.display = "none";
+      document.getElementById("211").value = "";
+      document.getElementById("212").value = "";
+    }
+    function hideaddition22() {
+      document.getElementById("addition22").style.display = "none";
+      document.getElementById("221").value = "";
+    }
   </script>
 
   <!-- setper script-->
@@ -1356,9 +1395,12 @@
       var reponse21 = document.querySelector(
         'input[name="radio3"]:checked'
       )?.value;
+      var reponse211 = document.getElementById("211");
+      var reponse212 = document.getElementById("212");
       var reponse22 = document.querySelector(
         'input[name="radio4"]:checked'
       )?.value;
+      var reponse221 = document.getElementById("221");
       var reponse23 = document.querySelector(
         'input[name="radio5"]:checked'
       )?.value;
@@ -1393,7 +1435,10 @@
         reponse19: reponse19.value,
         reponse20: reponse20,
         reponse21: reponse21,
+        reponse211: reponse211.value ? reponse211.value : "aucun",
+        reponse212: reponse212.value ? reponse212.value : "aucun",
         reponse22: reponse22,
+        reponse221: reponse221.value ? reponse221.value : "aucun",
         reponse23: reponse23,
       };
       return data;
