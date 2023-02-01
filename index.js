@@ -7,7 +7,7 @@ app.use(express.urlencoded());
 
 app.use(
   cors({
-    origin: "http://127.0.0.1:5500",
+    origin: "https://cartana2.netlify.app",
   })
 );
 const port = 3000;

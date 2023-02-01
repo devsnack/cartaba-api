@@ -1036,9 +1036,11 @@
         data.products = "aucun produit";
       }*/
       // var data =  {name:"abdeldjalil",adresse:"cartana sog el lile",r1:"highly recommended",note1:5};
-      postData("http://localhost:3000/data", data).then((data) => {
-        console.log(data); // JSON data parsed by `data.json()` call
-      });
+      postData("https://cartanaformulaire-api.onrender.com/data", data).then(
+        (data) => {
+          console.log(data); // JSON data parsed by `data.json()` call
+        }
+      );
     });
 
     async function postData(url = "http://localhost:3000/data", data) {
