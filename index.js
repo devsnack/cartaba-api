@@ -89,7 +89,7 @@ function reshapeData(data) {
     Date: newdate,
     "Nom et prenom": data.fullname,
     "Salon de coiffure": data.ccenter,
-    "Notation du Salon": snotation,
+    "Notation du Salon": data.snotation,
     Email: data.email,
     Téléphone: data.tel,
     Adresse: data.adresse,
