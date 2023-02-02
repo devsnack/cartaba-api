@@ -139,6 +139,7 @@ app.get("/infos", (req, res) => {
 });
 
 app.post("/data", async (req, res) => {
+  console.log(req.body);
   let rdata = req.body.data;
   data.push(rdata);
   let newdata = reshapeData(rdata);
