@@ -142,8 +142,13 @@ app.post("/data", async (req, res) => {
   let rdata = req.body;
   data.push(rdata);
   let newdata = reshapeData(rdata);
-  await db.insertOne(newdata);
-  console.log("data sendded");
+  try {
+    await db.insertOne(newdata);
+    console.log("data sendded");
+  } catch (e) {
+    console.log("error happen");
+  }
+
   res.status(200).json({ msg: "sucess" });
 });
 
