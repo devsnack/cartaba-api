@@ -7,7 +7,7 @@ app.use(express.urlencoded());
 
 app.use(
   cors({
-    origin: "https://cartana.pages.dev/",
+    origin: "https://cartana.pages.dev",
   })
 );
 const port = 3000;
