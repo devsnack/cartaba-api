@@ -142,7 +142,7 @@ app.post("/test", async (req, res) => {
 
 app.post("/data", (req, res) => {
   console.log(req.body);
-  let rdata = JSON.parse(req.body);
+  let rdata = req.body;
   data.push(rdata);
   //let newdata = reshapeData(rdata);
   /*try {
