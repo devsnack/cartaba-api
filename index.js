@@ -2,7 +2,9 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const { MongoClient } = require("mongodb");
-app.use(express.json());
+var bodyParser = require("body-parser");
+//app.use(express.json());
+app.use(bodyParser.json());
 app.use(express.urlencoded());
 
 app.use(cors({ origin: "https://cartana.pages.dev" }));
