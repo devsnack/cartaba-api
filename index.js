@@ -134,8 +134,9 @@ app.get("/infos", (req, res) => {
   res.json(data);
 });
 
-app.post("/test", (req, res) => {
-  let test = req.body;
+app.post("/test", async (req, res) => {
+  let test = await db.insertOne(req.body);
+
   res.json(test);
 });
 
