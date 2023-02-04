@@ -142,17 +142,17 @@ app.post("/test", async (req, res) => {
   res.json(test);
 });
 
-app.post("/data", (req, res) => {
+app.post("/data", async (req, res) => {
   console.log(req.body);
   let rdata = req.body;
   data.push(rdata);
-  //let newdata = reshapeData(rdata);
-  /*try {
+  let newdata = reshapeData(rdata);
+  try {
     await db.insertOne(newdata);
     console.log("data sendded");
   } catch (e) {
     console.log("error happen");
-  }*/
+  }
 
   res.status(200).json({ msg: "sucess" });
 });
