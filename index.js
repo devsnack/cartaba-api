@@ -134,6 +134,11 @@ app.get("/infos", (req, res) => {
   res.json(data);
 });
 
+app.post("/test", (req, res) => {
+  let test = req.body;
+  res.json(test);
+});
+
 app.post("/data", async (req, res) => {
   console.log(req.body);
   let rdata = JSON.parse(req.body);
